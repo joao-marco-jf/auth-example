@@ -1,5 +1,7 @@
 import { FormState, SignupFormSchema } from "@/lib/definitions";
+import { createSession, deleteSession } from "@/lib/session";
 import { PrismaClient } from '@prisma/client'
+import { redirect } from "next/navigation";
 
 const bcrypt = require('bcrypt');
 const prisma = new PrismaClient();
@@ -32,7 +34,11 @@ export async function signup(state: FormState, formData: FormData) {
         return { message: 'An error occurred while creating your account.' }
     }
 
-    // TODO:
-    // 4. Create user session
-    // 5. Redirect user
+    await createSession(user.id.toString());
+    redirect('/profile');
+}
+
+export async function logout() {
+    deleteSession();
+    redirect('/login');
 }
