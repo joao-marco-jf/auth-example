@@ -39,7 +39,7 @@ export async function createSession(userId: string){
     })
 
     const session = await encrypt({
-        sub: data.id.toString(),
+        sub: data.userid.toString(),
         exp: expiresAt.getTime()
     })
 
